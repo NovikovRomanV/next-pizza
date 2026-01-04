@@ -45,9 +45,9 @@ export const useFilters = (): ReturnProps => {
 
     // Фильтр стоимости
     const [prices, setPrices] = useState<PriceProps>({
-        priceFrom: Number(searchParams.get("priceFrom") || undefined),
-        priceTo: Number(searchParams.get("priceTo") || undefined),
-    })
+        priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+        priceTo: Number(searchParams.get('priceTo')) || undefined,
+    });
 
     const updatePrice = (name: keyof PriceProps, value: number) => {
         setPrices(prev => ({
