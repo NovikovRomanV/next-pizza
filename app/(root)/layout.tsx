@@ -1,5 +1,6 @@
+import { Header } from '@/shared/components/shared/header';
 import type {Metadata} from 'next';
-import {Header} from "@/components/shared";
+
 
 export const metadata: Metadata = {
     title: 'Create Next App',
