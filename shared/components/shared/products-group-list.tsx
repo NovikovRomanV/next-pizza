@@ -27,7 +27,7 @@ export const ProductsGroupList: React.FC<Props> = ({title, items, className, lis
         if(intersection?.isIntersecting){
            setActiveCategoryId(categoryId)
         }
-    }, [intersection?.isIntersecting]);
+    }, [categoryId, intersection?.isIntersecting]);
 
 
     return (

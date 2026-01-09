@@ -1,4 +1,3 @@
-import {ProductImage} from "@/shared/components/shared/product-image";
 import {cn} from "@/shared/lib/utils";
 import {Title} from "@/shared/components/shared/title";
 import {Button} from "../ui/button";
