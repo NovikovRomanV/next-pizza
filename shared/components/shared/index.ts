@@ -11,4 +11,5 @@ export {ProductImage} from './product-image';
 export {ChooseProductForm} from './choose-product-form';
 export {ChoosePizzaForm} from './choose-pizza-form';
 export {PizzaImage} from './pizza-image';
+export {IngredientItem} from './ingredient-item';
 export * from './modals'
