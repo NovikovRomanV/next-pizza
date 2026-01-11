@@ -20,8 +20,8 @@ export const ChooseProductModal: React.FC<Props> = ({product, className}) => {
         <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
             <DialogContent
                 className={cn('p-0 w-[1060px] max-w-[1060px] min-h-[500px] bg-white overflow-hidden', className,)}>
-                {isPizzaForm ? <ChoosePizzaForm ingredients={product.ingredients} name={product.name} imageUrl={product.imageUrl}/>:
-                    <ChooseProductForm name={product.name} imageUrl={product.imageUrl}/>
+                {isPizzaForm ? <ChoosePizzaForm ingredients={product.ingredients} name={product.name} imageUrl={product.imageUrl} items={product.items}/>:
+                    <ChooseProductForm name={product.name} imageUrl={product.imageUrl} ingredients={product.ingredients} items={product.items}/>
                 }
             </DialogContent>
         </Dialog>

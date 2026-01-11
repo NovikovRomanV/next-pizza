@@ -1,12 +1,16 @@
 import {cn} from "@/shared/lib/utils";
 import {Title} from "@/shared/components/shared/title";
 import {Button} from "../ui/button";
+import {Ingredient, ProductItem} from "@prisma/client";
+
 
 type Props = {
     imageUrl: string
     name: string
     className?: string
     onClickAdd?: VoidFunction
+    ingredients?: Ingredient[]
+    items?: ProductItem[]
 }
 
 export const ChooseProductForm: React.FC<Props> = ({name, imageUrl, onClickAdd, className}) => {

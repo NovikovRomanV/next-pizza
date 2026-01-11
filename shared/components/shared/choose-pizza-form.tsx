@@ -5,26 +5,45 @@ import {Title} from "@/shared/components/shared/title";
 import {Button} from "../ui/button";
 import {PizzaImage} from "@/shared/components/shared/pizza-image";
 import {GroupVariants} from "@/shared/components/shared/group-variants";
-import {PizzaSize, PizzaType, pizzaSizes, pizzaTypes} from "@/shared/constants/pizza";
-import {useState} from "react";
-import {Ingredient} from "@prisma/client";
+import {PizzaSize, PizzaType, pizzaTypes} from "@/shared/constants/pizza";
+import {Ingredient, ProductItem} from "@prisma/client";
 import {IngredientItem} from "./ingredient-item";
+import {usePizzaOptions} from "@/shared/hooks";
+import {getPizzaPrice} from "@/shared/lib/get-pizza-details";
+
 
 type Props = {
     imageUrl: string
     name: string
     className?: string
     ingredients: Ingredient[]
-    items?: any[]
-    onClickAdd?: VoidFunction
+    items: ProductItem[]
+    onClickAddCart?: VoidFunction
 }
 
-export const ChoosePizzaForm: React.FC<Props> = ({name, items, imageUrl, ingredients, onClickAdd, className}) => {
-    const [size, setSize] = useState<PizzaSize>(20)
-    const [type, setType] = useState<PizzaType>(1)
+export const ChoosePizzaForm: React.FC<Props> = ({name, items, imageUrl, ingredients, onClickAddCart, className}) => {
 
-    const textDetaills = '30 см, традиционное тесто 30'
-    const totalPrice = 350
+    const {
+        size,
+        type,
+        availableSizes,
+        setSize,
+        setType,
+        selectedIngredients,
+        addIngredient
+    } = usePizzaOptions(items)
+
+    const {totalPrice, textDetails} = getPizzaPrice(
+        type,
+        size,
+        items,
+        ingredients,
+        selectedIngredients
+    )
+
+    const handlerClickAdd = () => {
+        onClickAddCart?.()
+    }
 
     return (
         <div className={cn(className, 'flex flex-1')}>
@@ -32,10 +51,11 @@ export const ChoosePizzaForm: React.FC<Props> = ({name, items, imageUrl, ingredi
             <div className='w-[490px] bg-[#f7f6f5] p-7'>
                 <Title text={name} size='md' className="font-extrabold mb-1"/>
 
-                <p className="text-gray-400">{textDetaills}</p>
+                <p className="text-gray-400">{textDetails}</p>
+
 
                 <div className='flex flex-col gap-4 mt-5'>
-                    <GroupVariants items={pizzaSizes} value={String(size)}
+                    <GroupVariants items={availableSizes} value={String(size)}
                                    onClick={(value) => setSize(Number(value) as PizzaSize)}/>
 
                     <GroupVariants items={pizzaTypes} value={String(type)}
@@ -50,13 +70,14 @@ export const ChoosePizzaForm: React.FC<Props> = ({name, items, imageUrl, ingredi
                                 name={ingredient.name}
                                 imageUrl={ingredient.imageUrl}
                                 price={ingredient.price}
-                                onClick={onClickAdd}
+                                onClick={() => addIngredient(ingredient.id)}
+                                active={selectedIngredients.has(ingredient.id)}
                             />
                         ))}
                     </div>
                 </div>
 
-                <Button className="h-[55px] pz-10 text-base rounded-[18px] w-full mt-10">
+                <Button onClick={handlerClickAdd} className="h-[55px] pz-10 text-base rounded-[18px] w-full mt-10">
                     Добавить в корзину за {totalPrice}
                 </Button>
             </div>
